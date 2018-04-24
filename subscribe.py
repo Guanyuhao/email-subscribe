@@ -28,14 +28,16 @@ weather_api = "https://www.sojson.com/open/api/weather/json.shtml?city={}"
 
 # 邮件内容
 CONTENT_FORMAT = (
-    "你好，傻宝宝:\n\n\t"
+    "你好，傻宝宝 😄 :\n\n\t"
     "今天是 {_date}，{_week}。\n\t"
-    "首先，今天已经是我们相恋的第 {_loving_days} 天了喔。然后我就要来播送天气预报了！！\n\n\t"
+    "首先，今天已经是我们相恋的第 {_loving_days} 天了喔 💓。然后我就要来播送天气预报了！！\n\n\t"
     "广州明天{_g_weather_high}，{_g_weather_low}，天气 {_g_weather_type}，"
     "需要注意的是{_g_weather_notice}\n\n\t"
     "肇庆明天{_b_weather_high}，{_b_weather_low}，天气 {_b_weather_type}，"
     "需要注意的是{_b_weather_notice}"
-    )
+)
+
+ANGRY_MSG = "😠 傻宝宝，这傻逼接口他妈的又挂了喔！"
 
 
 def get_weather_info():
@@ -94,10 +96,11 @@ def send_email():
         try:
             content = get_weather_info()
         except Exception:
-            content = "傻宝宝，这傻逼接口他妈的又挂了喔！"
+            content = ANGRY_MSG
+
     message = MIMEText(content, "plain", "utf-8")
     message["From"] = Header("暖宝宝", "utf-8")
-    message["To"] = Header("a handsome soul")
+    message["To"] = Header("A handsome soul")
     message["Subject"] = Header("😘 男朋友的日常问候", "utf-8")
     try:
         smtp_obj = smtplib.SMTP_SSL(MAIL_HOST)
