@@ -1,30 +1,35 @@
 # !/usr/bin/env python
 # coding=utf-8
 
-import os
 import datetime
+import os
 import smtplib
-from email.mime.text import MIMEText
 from email.header import Header
+from email.mime.text import MIMEText
 
 import requests
+from tenacity import retry, stop_after_attempt
 
-GIRL, BOY = "广州", "肇庆"
 HEADERS = {
     "X-Requested-With": "XMLHttpRequest",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36"
     "(KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
 }
 
+GIRL_CITY, BOY_CITY = "广州", "肇庆"
+FALL_IN_LOVE = (2015, 7, 2)
+
+# 隐私数据存放在环境变量中
 MAIL_HOST = os.environ.get("MAIL_HOST")
 MAIL_USER = os.environ.get("MAIL_USER")
 MAIL_PASS = os.environ.get("MAIL_PASS")
+MAIL_SENDER = os.environ.get("MAIL_SENDER")
+MAIL_RECEIVER = os.environ.get("MAIL_RECEIVER")
 
-RECEIVER = ["1259462438@qq.com"]
-SENDER = "chenjiandongx@qq.com"
+MAIL_ENCODING = "utf-8"
 
 # 聚合数据天气预报 api
-weather_api = "https://www.sojson.com/open/api/weather/json.shtml?city={}"
+WEATHER_API = "https://www.sojson.com/open/api/weather/json.shtml?city={}"
 
 # 邮件内容
 CONTENT_FORMAT = (
@@ -40,12 +45,13 @@ CONTENT_FORMAT = (
 ANGRY_MSG = "😠 傻宝宝，这傻逼接口他妈的又挂了喔！"
 
 
+@retry(stop=stop_after_attempt(3), retry_error_callback=lambda _: None)
 def get_weather_info():
     """
     获取天气信息
     """
-    girl = requests.get(weather_api.format(GIRL, headers=HEADERS)).json()
-    boy = requests.get(weather_api.format(BOY, headers=HEADERS)).json()
+    girl = requests.get(WEATHER_API.format(GIRL_CITY, headers=HEADERS)).json()
+    boy = requests.get(WEATHER_API.format(BOY_CITY, headers=HEADERS)).json()
 
     girl_weather = girl["data"]["forecast"][1]
     boy_weather = boy["data"]["forecast"][1]
@@ -73,13 +79,13 @@ def get_loving_days():
     获取恋爱天数
     """
     today = datetime.datetime.today()
-    anniversary = datetime.datetime(2015, 7, 2)
+    anniversary = datetime.datetime(*FALL_IN_LOVE)
     return (today - anniversary).days
 
 
 def get_today(today):
     """
-    格式化今天日期
+    日期格式化
     """
     date = today["date"]
     week = today["data"]["forecast"][0]["date"][-3:]
@@ -90,22 +96,15 @@ def send_email():
     """
     发送邮件
     """
-    try:
-        content = get_weather_info()
-    except Exception:
-        try:
-            content = get_weather_info()
-        except Exception:
-            content = ANGRY_MSG
-
-    message = MIMEText(content, "plain", "utf-8")
-    message["From"] = Header("暖宝宝", "utf-8")
+    content = get_weather_info() or ANGRY_MSG
+    message = MIMEText(content, "plain", MAIL_ENCODING)
+    message["From"] = Header("暖宝宝", MAIL_ENCODING)
     message["To"] = Header("A handsome soul")
-    message["Subject"] = Header("😘 男朋友的日常问候", "utf-8")
+    message["Subject"] = Header("😘 男朋友的日常问候", MAIL_ENCODING)
     try:
         smtp_obj = smtplib.SMTP_SSL(MAIL_HOST)
         smtp_obj.login(MAIL_USER, MAIL_PASS)
-        smtp_obj.sendmail(SENDER, RECEIVER, message.as_string())
+        smtp_obj.sendmail(MAIL_SENDER, [MAIL_RECEIVER], message.as_string())
         smtp_obj.quit()
     except Exception as e:
         print(e)
