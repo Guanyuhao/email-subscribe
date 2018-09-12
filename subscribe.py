@@ -36,10 +36,10 @@ CONTENT_FORMAT = (
     "你好，傻宝宝 😄 :\n\n\t"
     "今天是 {_date}，{_week}。\n\t"
     "首先，今天已经是我们相恋的第 {_loving_days} 天了喔 💓。然后我就要来播送天气预报了！！\n\n\t"
-    "广州明天{_g_weather_high}，{_g_weather_low}，天气 {_g_weather_type}，"
-    "需要注意的是{_g_weather_notice}\n\n\t"
-    "肇庆明天{_b_weather_high}，{_b_weather_low}，天气 {_b_weather_type}，"
-    "需要注意的是{_b_weather_notice}"
+    "👧 {_g_city}明天{_g_weather_high}，{_g_weather_low}，天气 {_g_weather_type}，"
+    "{_g_weather_notice}\n\n\t"
+    "👦 {_b_city}明天{_b_weather_high}，{_b_weather_low}，天气 {_b_weather_type}，"
+    "{_b_weather_notice}"
 )
 
 ANGRY_MSG = "😠 傻宝宝，这傻逼接口他妈的又挂了喔！"
@@ -63,10 +63,12 @@ def get_weather_info():
             _week=_week,
             _date=_date,
             _loving_days=get_loving_days(),
+            _g_city=GIRL_CITY,
             _g_weather_high=girl_weather["high"],
             _g_weather_low=girl_weather["low"],
             _g_weather_type=girl_weather["type"],
             _g_weather_notice=girl_weather["notice"],
+            _b_city=BOY_CITY,
             _b_weather_high=boy_weather["high"],
             _b_weather_low=boy_weather["low"],
             _b_weather_type=boy_weather["type"],
