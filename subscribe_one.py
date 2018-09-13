@@ -24,8 +24,8 @@ HTML = """
         <h2>😘 Daily</h2>
         <p>傻宝宝，今天已经是我们相恋的第 {loving_days} 天了喔 💓。</p>
         <br/>
+        <img style="padding: 0.60em; background: white; box-shadow: 1px 1px 10px #999;" src="cid:one" />
     </div>
-    <img style="padding: 0.65em; background: white; box-shadow: 1px 1px 20px #999;" src="cid:one" />
 </body>
 </html>
 """
@@ -69,5 +69,8 @@ def send_email():
 
 
 if __name__ == "__main__":
-    asyncio.get_event_loop().run_until_complete(fetch())
+    try:
+        asyncio.get_event_loop().run_until_complete(fetch())
+    except Exception:
+        asyncio.get_event_loop().run_until_complete(fetch())
     send_email()
