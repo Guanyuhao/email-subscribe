@@ -1,4 +1,5 @@
 language: python
+sudo: enabled
 notifications:
   email:
     recipients:
@@ -9,5 +10,7 @@ python:
   - 3.6
 before_install:
   - pip install -r requirements.txt
+  - sudo apt-get install fonts-droid ttf-wqy-zenhei ttf-wqy-microhei fonts-arphic-ukai fonts-arphic-uming
+  - sudo fc-cache -f -v
 script:
   - python3 subscribe_one.py
