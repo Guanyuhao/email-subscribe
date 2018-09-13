@@ -23,6 +23,7 @@ HTML = """
     <div align="center">
         <h2>😘 Daily</h2>
         <p>傻宝宝，今天已经是我们相恋的第 {loving_days} 天了喔 💓。</p>
+        <br/>
         <img style="padding: 0.65em; background: white; box-shadow: 1px 1px 20px #999;" src="cid:one" />
     </div>
 </body>
@@ -40,8 +41,7 @@ async def fetch():
     await page.screenshot(
         {
             "path": IMAGE_NAME,
-            # "clip": {"x": 60, "y": 120, "height": 570, "width": 700},
-            "fullPage": True
+            "clip": {"x": 60, "y": 120, "height": 570, "width": 700},
         }
     )
     await browser.close()
