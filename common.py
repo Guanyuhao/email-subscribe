@@ -13,6 +13,8 @@ MAIL_PASS = os.environ.get("MAIL_PASS")
 MAIL_SENDER = os.environ.get("MAIL_SENDER")
 MAIL_RECEIVER = os.environ.get("MAIL_RECEIVER")
 
+MAIL_ENCODING = "utf8"
+
 
 def get_loving_days():
     """

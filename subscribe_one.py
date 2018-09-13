@@ -51,14 +51,15 @@ def send_email():
     html_content = HTML.replace("{loving_days}", str(get_loving_days()))
 
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = Header("Daily", "utf-8")
+    msg["Subject"] = Header("Daily", MAIL_ENCODING )
+    msg["From"] = Header("A handsome boy", MAIL_ENCODING)
     msg["To"] = Header("A pretty girl")
 
     with open(IMAGE_NAME, "rb") as f:
         img = MIMEImage(f.read())
         img.add_header("Content-ID", "one")
         msg.attach(img)
-    msg.attach(MIMEText(html_content, "html", "utf8"))
+    msg.attach(MIMEText(html_content, "html", MAIL_ENCODING))
 
     try:
         smtp_obj = smtplib.SMTP_SSL(MAIL_HOST)

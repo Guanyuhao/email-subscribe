@@ -18,8 +18,6 @@ HEADERS = {
 
 GIRL_CITY, BOY_CITY = "广州", "肇庆"
 
-MAIL_ENCODING = "utf-8"
-
 # 聚合数据天气预报 api
 WEATHER_API = "https://www.sojson.com/open/api/weathera/json.shtml?city={}"
 
