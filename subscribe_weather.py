@@ -1,8 +1,6 @@
 # !/usr/bin/env python
 # coding=utf-8
 
-import datetime
-import os
 import smtplib
 import time
 from email.header import Header
@@ -11,20 +9,14 @@ from email.mime.text import MIMEText
 import requests
 from tenacity import retry, stop_after_attempt, wait_random
 
+from common import *
+
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36"
     "(KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
 }
 
 GIRL_CITY, BOY_CITY = "广州", "肇庆"
-FALL_IN_LOVE = (2015, 7, 2)
-
-# 隐私数据存放在环境变量中
-MAIL_HOST = os.environ.get("MAIL_HOST")
-MAIL_USER = os.environ.get("MAIL_USER")
-MAIL_PASS = os.environ.get("MAIL_PASS")
-MAIL_SENDER = os.environ.get("MAIL_SENDER")
-MAIL_RECEIVER = os.environ.get("MAIL_RECEIVER")
 
 MAIL_ENCODING = "utf-8"
 
@@ -78,15 +70,6 @@ def get_weather_info():
             _b_weather_type=boy_weather["type"],
             _b_weather_notice=boy_weather["notice"],
         )
-
-
-def get_loving_days():
-    """
-    获取恋爱天数
-    """
-    today = datetime.datetime.today()
-    anniversary = datetime.datetime(*FALL_IN_LOVE)
-    return (today - anniversary).days
 
 
 def get_today(today):
