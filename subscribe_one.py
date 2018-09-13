@@ -32,7 +32,9 @@ IMAGE_NAME = "one.png"
 
 
 async def fetch():
-    browser = await launch()
+    browser = await launch(
+        {"args": ["--no-sandbox", "--disable-setuid-sandbox"]}
+    )
     page = await browser.newPage()
     await page.goto("http://wufazhuce.com/")
     await page.screenshot(
