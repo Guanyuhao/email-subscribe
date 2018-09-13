@@ -53,7 +53,7 @@ def send_email():
     msg = MIMEMultipart("alternative")
     msg["Subject"] = Header("Daily", "utf-8")
 
-    with open(IMAGE_NAME, "rb", encoding="utf8") as f:
+    with open(IMAGE_NAME, "rb") as f:
         img = MIMEImage(f.read())
         img.add_header("Content-ID", "one")
         msg.attach(img)
