@@ -40,7 +40,8 @@ async def fetch():
     await page.screenshot(
         {
             "path": IMAGE_NAME,
-            "clip": {"x": 60, "y": 120, "height": 570, "width": 700},
+            # "clip": {"x": 60, "y": 120, "height": 570, "width": 700},
+            "fullPage": True
         }
     )
     await browser.close()
