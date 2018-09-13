@@ -4,16 +4,16 @@
 import datetime
 import os
 import smtplib
+import time
 from email.header import Header
 from email.mime.text import MIMEText
 
 import requests
-from tenacity import retry, stop_after_attempt
+from tenacity import retry, stop_after_attempt, wait_random
 
 HEADERS = {
-    "X-Requested-With": "XMLHttpRequest",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36"
-    "(KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
+    "(KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
 }
 
 GIRL_CITY, BOY_CITY = "广州", "肇庆"
@@ -29,7 +29,7 @@ MAIL_RECEIVER = os.environ.get("MAIL_RECEIVER")
 MAIL_ENCODING = "utf-8"
 
 # 聚合数据天气预报 api
-WEATHER_API = "https://www.sojson.com/open/api/weather/json.shtml?city={}"
+WEATHER_API = "https://www.sojson.com/open/api/weathera/json.shtml?city={}"
 
 # 邮件内容
 CONTENT_FORMAT = (
@@ -45,14 +45,18 @@ CONTENT_FORMAT = (
 ANGRY_MSG = "😠 傻宝宝，这傻逼接口他妈的又挂了喔！"
 
 
-@retry(stop=stop_after_attempt(3), retry_error_callback=lambda _: None)
+@retry(
+    stop=stop_after_attempt(5),
+    retry_error_callback=lambda _: None,
+    wait=wait_random(min=3, max=5),
+)
 def get_weather_info():
     """
     获取天气信息
     """
     girl = requests.get(WEATHER_API.format(GIRL_CITY, headers=HEADERS)).json()
+    time.sleep(3)  # 延迟，避免调用频率过高
     boy = requests.get(WEATHER_API.format(BOY_CITY, headers=HEADERS)).json()
-
     girl_weather = girl["data"]["forecast"][1]
     boy_weather = boy["data"]["forecast"][1]
 
