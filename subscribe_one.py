@@ -52,6 +52,7 @@ def send_email():
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = Header("Daily", "utf-8")
+    msg["To"] = Header("A pretty girl")
 
     with open(IMAGE_NAME, "rb") as f:
         img = MIMEImage(f.read())
