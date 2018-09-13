@@ -48,14 +48,14 @@ ANGRY_MSG = "😠 傻宝宝，这傻逼接口他妈的又挂了喔！"
 @retry(
     stop=stop_after_attempt(5),
     retry_error_callback=lambda _: None,
-    wait=wait_random(min=3, max=5),
+    wait=wait_random(min=5, max=10),
 )
 def get_weather_info():
     """
     获取天气信息
     """
     girl = requests.get(WEATHER_API.format(GIRL_CITY, headers=HEADERS)).json()
-    time.sleep(3)  # 延迟，避免调用频率过高
+    time.sleep(8)  # 延迟，避免调用频率过高
     boy = requests.get(WEATHER_API.format(BOY_CITY, headers=HEADERS)).json()
     girl_weather = girl["data"]["forecast"][1]
     boy_weather = boy["data"]["forecast"][1]
