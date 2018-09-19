@@ -17,7 +17,7 @@
 **推送天气预报**
 
 <div align="center">
-    <img width="70%" src="https://user-images.githubusercontent.com/19553554/45738592-81103380-bc23-11e8-9248-120bd83ae50a.jpg">
+    <img width="50%" src="https://user-images.githubusercontent.com/19553554/45738592-81103380-bc23-11e8-9248-120bd83ae50a.jpg">
 </div>
 
 ### [Subscribe One](subscribe_one.py)
@@ -25,7 +25,7 @@
 **推送每日精选**
 
 <div align="center">
-    <img width="70%" src="https://user-images.githubusercontent.com/19553554/45738403-ea437700-bc22-11e8-8007-f6062ae78c2d.jpg">
+    <img width="50%" src="https://user-images.githubusercontent.com/19553554/45738403-ea437700-bc22-11e8-8007-f6062ae78c2d.jpg">
 </div>
 
 
