@@ -3,7 +3,7 @@ sudo: enabled
 notifications:
   email:
     recipients:
-      - chenjiandongx@qq.com
+      - 272949902@qq.com
     on_success: change # default: change
     on_failure: always # default: always
 python:
