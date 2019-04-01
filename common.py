@@ -4,7 +4,7 @@
 import os
 import datetime
 
-FALL_IN_LOVE = (2015, 7, 2)
+FALL_IN_LOVE = (2019, 2, 8)
 
 # 隐私数据存放在环境变量中
 MAIL_HOST = os.environ.get("MAIL_HOST")
