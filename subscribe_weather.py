@@ -16,7 +16,7 @@ HEADERS = {
     "(KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
 }
 
-GIRL_CITY, BOY_CITY = "广州", "肇庆"
+GIRL_CITY, BOY_CITY = "北京", "海淀"
 
 # 聚合数据天气预报 api
 WEATHER_API = "https://www.sojson.com/open/api/weathera/json.shtml?city={}"
